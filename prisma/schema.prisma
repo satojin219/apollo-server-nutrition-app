@@ -2,35 +2,91 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["referentialIntegrity"]
 }
+
 datasource db {
-  provider = "mysql"
-  url = env("DATABASE_URL")
-  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  shadowDatabaseUrl    = env("SHADOW_DATABASE_URL")
   referentialIntegrity = "prisma"
 }
 
-
-enum TodoStatus {
-  done
-  pending
-}
-
-model Todo {
-  id          Int        @id @default(autoincrement())
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  title       String     @db.VarChar(255)
-  description String?
-  status      TodoStatus @default(pending)
-  user        User       @relation(fields: [userId], references: [id])
-  userId      String
-}
-
 model User {
-  id    String  @id @unique
-  name  String?
-  todos Todo[]
+  id          String @id @unique
+  name        String
+  age         Int
+  gender      String
+  weight      Int
+  height      Int
+  activeLevel Int
+}
+
+model Menu {
+  id             Int         @id @default(autoincrement())
+  recipeName     String
+  imgUrl         String
+  foodstuffs     Foodstuff[]
+  recipes        Recipe[]
+  tips           String
+  cost           Int
+  time           Int
+  type           String
+  createdAt      String
+  totalNutrition Nutrition[]
+}
+
+model Foodstuff {
+  id     Int    @id @default(autoincrement())
+  name   String
+  weight Int
+  Menu   Menu?  @relation(fields: [menuId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  menuId Int    @unique
+}
+
+model Recipe {
+  id      Int    @id @default(autoincrement())
+  content String
+  Menu    Menu?  @relation(fields: [menuId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  menuId  Int?
+}
+
+model Nutrition {
+  id              Int   @id @default(autoincrement())
+  calorie         Int
+  carbohydrates   Int
+  protein         Int
+  lipids          Int
+  suger           Int
+  dietaryFiber    Int
+  salt            Int
+  na              Int
+  k               Int
+  ca              Int
+  mg              Int
+  p               Int
+  fe              Int
+  zn              Int
+  cu              Int
+  mn              Int
+  i               Int
+  se              Int
+  cr              Int
+  mo              Int
+  vitA            Int
+  vitD            Int
+  vitE            Int
+  vitK            Int
+  vitB1           Int
+  vitB2           Int
+  vitB6           Int
+  vitB12          Int
+  vitC            Int
+  niacin          Int
+  pantothenicAcid Int
+  folate          Int
+  biotin          Int
+  Menu            Menu? @relation(fields: [menuId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  menuId          Int?
 }
