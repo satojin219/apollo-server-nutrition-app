@@ -1,0 +1,276 @@
+# type Query {
+#   getUser: User
+#   getTodos: [Todo]!
+#   getTodoById(id: Int!): Todo
+# }
+
+# type Mutation {
+#   addTodo(input: AddTodoInput): Todo
+#   updateTodo(id: Int, input: UpdateTodoInput): Todo
+#   deleteTodo(id: Int): Todo
+#   createUser(id: String, input: UserInput): User
+#   updateUser(id: String, input: UserInput): User
+# }
+
+# input AddTodoInput {
+#   title: String!
+#   description: String
+# }
+
+# input UpdateTodoInput {
+#   title: String
+#   description: String
+#   status: TodoStatus
+# }
+
+# input UserInput {
+#   name: String!
+# }
+
+# enum TodoStatus {
+#   done
+#   pending
+# }
+
+# type Todo {
+#   id: Int
+#   createdAt: Date
+#   updatedAt: Date
+#   title: String
+#   description: String
+#   status: TodoStatus!
+#   user: User
+#   userId: String
+# }
+
+# type User {
+#   id: String
+#   name: String
+#   todos: [Todo]
+# }
+
+# scalar Date
+
+# GraphQL schema example
+#
+# https:#gqlgen.com/getting-started/
+
+type User {
+  userId: ID!
+  name: String
+  age: Int
+  gender: String
+  weight: Int
+  height: Int
+  activeLevel: Int
+}
+
+type DishData {
+  breakfast: [Menu]
+  lunch: [Menu]
+  dinner: [Menu]
+  snack: [Menu]
+}
+
+type Menu {
+  id: ID!
+  userId: ID!
+  recipeName: String
+  imgUrl: String
+  foodstuffs: [Foodstuff]
+  totalNutrition: Nutrition
+  recipes: [Recipe]
+  tips: String
+  cost: Int
+  time: Int
+  type: String
+  createdAt: String
+}
+
+type Foodstuff {
+  id: ID!
+  name: String
+  weight: Int
+  nutrition: Nutrition
+}
+
+type Recipe {
+  id: ID!
+  content: String
+}
+
+type Nutrition {
+  calorie: Int #カロリー
+  carbohydrates: Int #炭水化物
+  protein: Int #たんぱく質
+  lipids: Int #脂質
+  suger: Int #糖質
+  dietaryFiber: Int #食物繊維
+  salt: Int #食塩相当量
+  na: Int #ナトリウム
+  k: Int #カリウム
+  ca: Int #カルシウム
+  mg: Int #マグネシウム
+  p: Int #リン
+  fe: Int #鉄
+  zn: Int #亜鉛
+  cu: Int #銅
+  mn: Int #マンガン
+  i: Int #ヨウ素
+  se: Int #セレン
+  cr: Int #クロム
+  mo: Int #モリブデン
+  vitA: Int #ビタミンA(レチノール活性当量)
+  vitD: Int #ビタミンD(α-トコフェロール)
+  vitE: Int #ビタミンD,
+  vitK: Int #ビタミンK
+  vitB1: Int #ビタミンB₁
+  vitB2: Int #ビタミンB₂
+  vitB6: Int #ビタミンB₆
+  vitB12: Int #ビタミンB₁₂
+  vitC: Int #ビタミンC
+  niacin: Int #ナイアシン(ナイアシン当量)
+  pantothenicAcid: Int #パントテン酸
+  folate: Int #葉酸
+  biotin: Int #ビオチン
+}
+
+input CrateMenuInput {
+  recipeName: String
+  imgUrl: String
+  tips: String
+  cost: Int
+  time: Int
+  type: String
+  createdAt: String
+}
+
+input UpdateMenuInput {
+  id: ID!
+  recipeName: String
+  imgUrl: String
+  tips: String
+  cost: Int
+  time: Int
+  type: String
+  createdAt: String
+}
+
+input CreateFoodstuffInput {
+  name: String
+  weight: Int
+  nutrition: CreateNutritionInput
+}
+input UpdateFoodstuffInput {
+  id: ID!
+  name: String
+  weight: Int
+  nutrition: UpdateNutritionInput
+}
+input CreateRecipeInput {
+  content: String
+}
+input UpdateRecipeInput {
+  id: ID!
+  content: String
+}
+input CreateNutritionInput {
+  calorie: Int #カロリー
+  carbohydrates: Int #炭水化物
+  protein: Int #たんぱく質
+  lipids: Int #脂質
+  suger: Int #糖質
+  dietaryFiber: Int #食物繊維
+  salt: Int #食塩相当量
+  na: Int #ナトリウム
+  k: Int #カリウム
+  ca: Int #カルシウム
+  mg: Int #マグネシウム
+  p: Int #リン
+  fe: Int #鉄
+  zn: Int #亜鉛
+  cu: Int #銅
+  mn: Int #マンガン
+  i: Int #ヨウ素
+  se: Int #セレン
+  cr: Int #クロム
+  mo: Int #モリブデン
+  vitA: Int #ビタミンA(レチノール活性当量)
+  vitD: Int #ビタミンD(α-トコフェロール)
+  vitE: Int #ビタミンD,
+  vitK: Int #ビタミンK
+  vitB1: Int #ビタミンB₁
+  vitB2: Int #ビタミンB₂
+  vitB6: Int #ビタミンB₆
+  vitB12: Int #ビタミンB₁₂
+  vitC: Int #ビタミンC
+  niacin: Int #ナイアシン(ナイアシン当量)
+  pantothenicAcid: Int #パントテン酸
+  folate: Int #葉酸
+  biotin: Int #ビオチン
+}
+input UpdateNutritionInput {
+  calorie: Int #カロリー
+  carbohydrates: Int #炭水化物
+  protein: Int #たんぱく質
+  lipids: Int #脂質
+  suger: Int #糖質
+  dietaryFiber: Int #食物繊維
+  salt: Int #食塩相当量
+  na: Int #ナトリウム
+  k: Int #カリウム
+  ca: Int #カルシウム
+  mg: Int #マグネシウム
+  p: Int #リン
+  fe: Int #鉄
+  zn: Int #亜鉛
+  cu: Int #銅
+  mn: Int #マンガン
+  i: Int #ヨウ素
+  se: Int #セレン
+  cr: Int #クロム
+  mo: Int #モリブデン
+  vitA: Int #ビタミンA(レチノール活性当量)
+  vitD: Int #ビタミンD(α-トコフェロール)
+  vitE: Int #ビタミンD,
+  vitK: Int #ビタミンK
+  vitB1: Int #ビタミンB₁
+  vitB2: Int #ビタミンB₂
+  vitB6: Int #ビタミンB₆
+  vitB12: Int #ビタミンB₁₂
+  vitC: Int #ビタミンC
+  niacin: Int #ナイアシン(ナイアシン当量)
+  pantothenicAcid: Int #パントテン酸
+  folate: Int #葉酸
+  biotin: Int #ビオチン
+}
+input NewUser {
+  name: String!
+  age: Int
+  gender: String
+  weight: Int
+  height: Int
+  activeLevel: Int
+}
+
+type Mutation {
+  createUser(input: NewUser!): User!
+  createMenu(
+    input: CrateMenuInput!
+    foodstuffs: [CreateFoodstuffInput!]!
+    recipes: [CreateRecipeInput!]!
+    totalNutrition: CreateNutritionInput
+  ): Menu!
+  UpdateMenu(
+    input: UpdateMenuInput!
+    foodstuffs: [UpdateFoodstuffInput!]!
+    recipes: [UpdateRecipeInput!]!
+    totalNutrition: UpdateNutritionInput!
+  ): Menu!
+  CreateFoodstuff(input: CreateFoodstuffInput): [Foodstuff!]!
+  UpdateFoodstuff(input: UpdateFoodstuffInput): [Foodstuff!]!
+  CreateRecipe(input: CreateRecipeInput): [Recipe!]!
+  UpdateRecipe(input: UpdateRecipeInput): [Recipe!]!
+  CreateNutrition(input: CreateNutritionInput): Nutrition
+  UpdateNutrition(input: UpdateNutritionInput): Nutrition
+}
