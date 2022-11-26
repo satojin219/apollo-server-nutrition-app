@@ -245,6 +245,7 @@ input UpdateNutritionInput {
   biotin: Int #ビオチン
 }
 input NewUser {
+  userId: ID!
   name: String!
   age: Int
   gender: String

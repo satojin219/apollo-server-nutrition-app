@@ -22,12 +22,15 @@
     "@graphql-tools/schema": "^9.0.9",
     "@prisma/client": "^4.6.1",
     "apollo-server": "^3.11.1",
-    "graphql": "^16.6.0"
+    "graphql": "^16.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "jwks-rsa": "^3.0.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^2.13.11",
     "@graphql-codegen/typescript": "^2.8.1",
     "@graphql-codegen/typescript-resolvers": "^2.7.6",
+    "@types/node-fetch": "^2.6.2",
     "@typescript-eslint/eslint-plugin": "^5.42.1",
     "@typescript-eslint/parser": "^5.42.1",
     "eslint": "^8.27.0",
