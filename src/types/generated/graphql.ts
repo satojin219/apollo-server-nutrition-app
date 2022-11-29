@@ -285,7 +285,6 @@ export type User = {
   gender?: Maybe<Scalars['String']>;
   height?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
-  userId: Scalars['ID'];
   weight?: Maybe<Scalars['Int']>;
 };
 

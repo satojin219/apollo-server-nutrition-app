@@ -126,7 +126,7 @@ type Nutrition {
   vitK: Int #ビタミンK
   vitB1: Int #ビタミンB₁
   vitB2: Int #ビタミンB₂
-  vitB6: Int #ビタミンB₆
+  vitB6: Int #ビタミンB₆Ne
   vitB12: Int #ビタミンB₁₂
   vitC: Int #ビタミンC
   niacin: Int #ナイアシン(ナイアシン当量)
@@ -245,7 +245,6 @@ input UpdateNutritionInput {
   biotin: Int #ビオチン
 }
 input NewUser {
-  userId: ID!
   name: String!
   age: Int
   gender: String
