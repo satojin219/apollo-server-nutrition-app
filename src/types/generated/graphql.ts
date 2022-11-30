@@ -71,14 +71,6 @@ export type CreateRecipeInput = {
   content?: InputMaybe<Scalars['String']>;
 };
 
-export type DishData = {
-  __typename?: 'DishData';
-  breakfast?: Maybe<Array<Maybe<Menu>>>;
-  dinner?: Maybe<Array<Maybe<Menu>>>;
-  lunch?: Maybe<Array<Maybe<Menu>>>;
-  snack?: Maybe<Array<Maybe<Menu>>>;
-};
-
 export type Foodstuff = {
   __typename?: 'Foodstuff';
   id: Scalars['ID'];
@@ -94,6 +86,7 @@ export type Menu = {
   foodstuffs?: Maybe<Array<Maybe<Foodstuff>>>;
   id: Scalars['ID'];
   imgUrl?: Maybe<Scalars['String']>;
+  mealTime?: Maybe<Scalars['String']>;
   recipeName?: Maybe<Scalars['String']>;
   recipes?: Maybe<Array<Maybe<Recipe>>>;
   time?: Maybe<Scalars['Int']>;
@@ -168,12 +161,12 @@ export type MutationCreateUserArgs = {
 };
 
 export type NewUser = {
-  activeLevel?: InputMaybe<Scalars['Int']>;
-  age?: InputMaybe<Scalars['Int']>;
-  gender?: InputMaybe<Scalars['String']>;
-  height?: InputMaybe<Scalars['Int']>;
+  activeLevel: Scalars['Int'];
+  age: Scalars['Int'];
+  gender: Scalars['String'];
+  height: Scalars['Int'];
   name: Scalars['String'];
-  weight?: InputMaybe<Scalars['Int']>;
+  weight: Scalars['Int'];
 };
 
 export type Nutrition = {
@@ -211,6 +204,24 @@ export type Nutrition = {
   vitE?: Maybe<Scalars['Int']>;
   vitK?: Maybe<Scalars['Int']>;
   zn?: Maybe<Scalars['Int']>;
+};
+
+export type Query = {
+  __typename?: 'Query';
+  getMenuById?: Maybe<Menu>;
+  getMenusById?: Maybe<Array<Maybe<Menu>>>;
+  getUser?: Maybe<User>;
+};
+
+
+export type QueryGetMenuByIdArgs = {
+  userId: Scalars['Int'];
+};
+
+
+export type QueryGetMenusByIdArgs = {
+  mealTime?: InputMaybe<Scalars['String']>;
+  userId: Scalars['Int'];
 };
 
 export type Recipe = {
@@ -284,6 +295,7 @@ export type User = {
   age?: Maybe<Scalars['Int']>;
   gender?: Maybe<Scalars['String']>;
   height?: Maybe<Scalars['Int']>;
+  id: Scalars['ID'];
   name?: Maybe<Scalars['String']>;
   weight?: Maybe<Scalars['Int']>;
 };
@@ -363,7 +375,6 @@ export type ResolversTypes = ResolversObject<{
   CreateFoodstuffInput: CreateFoodstuffInput;
   CreateNutritionInput: CreateNutritionInput;
   CreateRecipeInput: CreateRecipeInput;
-  DishData: ResolverTypeWrapper<DishData>;
   Foodstuff: ResolverTypeWrapper<Foodstuff>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
@@ -371,6 +382,7 @@ export type ResolversTypes = ResolversObject<{
   Mutation: ResolverTypeWrapper<{}>;
   NewUser: NewUser;
   Nutrition: ResolverTypeWrapper<Nutrition>;
+  Query: ResolverTypeWrapper<{}>;
   Recipe: ResolverTypeWrapper<Recipe>;
   String: ResolverTypeWrapper<Scalars['String']>;
   UpdateFoodstuffInput: UpdateFoodstuffInput;
@@ -387,7 +399,6 @@ export type ResolversParentTypes = ResolversObject<{
   CreateFoodstuffInput: CreateFoodstuffInput;
   CreateNutritionInput: CreateNutritionInput;
   CreateRecipeInput: CreateRecipeInput;
-  DishData: DishData;
   Foodstuff: Foodstuff;
   ID: Scalars['ID'];
   Int: Scalars['Int'];
@@ -395,6 +406,7 @@ export type ResolversParentTypes = ResolversObject<{
   Mutation: {};
   NewUser: NewUser;
   Nutrition: Nutrition;
+  Query: {};
   Recipe: Recipe;
   String: Scalars['String'];
   UpdateFoodstuffInput: UpdateFoodstuffInput;
@@ -402,14 +414,6 @@ export type ResolversParentTypes = ResolversObject<{
   UpdateNutritionInput: UpdateNutritionInput;
   UpdateRecipeInput: UpdateRecipeInput;
   User: User;
-}>;
-
-export type DishDataResolvers<ContextType = Context, ParentType extends ResolversParentTypes['DishData'] = ResolversParentTypes['DishData']> = ResolversObject<{
-  breakfast?: Resolver<Maybe<Array<Maybe<ResolversTypes['Menu']>>>, ParentType, ContextType>;
-  dinner?: Resolver<Maybe<Array<Maybe<ResolversTypes['Menu']>>>, ParentType, ContextType>;
-  lunch?: Resolver<Maybe<Array<Maybe<ResolversTypes['Menu']>>>, ParentType, ContextType>;
-  snack?: Resolver<Maybe<Array<Maybe<ResolversTypes['Menu']>>>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type FoodstuffResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Foodstuff'] = ResolversParentTypes['Foodstuff']> = ResolversObject<{
@@ -426,6 +430,7 @@ export type MenuResolvers<ContextType = Context, ParentType extends ResolversPar
   foodstuffs?: Resolver<Maybe<Array<Maybe<ResolversTypes['Foodstuff']>>>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   imgUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  mealTime?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   recipeName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   recipes?: Resolver<Maybe<Array<Maybe<ResolversTypes['Recipe']>>>, ParentType, ContextType>;
   time?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
@@ -485,6 +490,12 @@ export type NutritionResolvers<ContextType = Context, ParentType extends Resolve
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
+  getMenuById?: Resolver<Maybe<ResolversTypes['Menu']>, ParentType, ContextType, RequireFields<QueryGetMenuByIdArgs, 'userId'>>;
+  getMenusById?: Resolver<Maybe<Array<Maybe<ResolversTypes['Menu']>>>, ParentType, ContextType, RequireFields<QueryGetMenusByIdArgs, 'userId'>>;
+  getUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+}>;
+
 export type RecipeResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Recipe'] = ResolversParentTypes['Recipe']> = ResolversObject<{
   content?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
@@ -496,18 +507,18 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
   age?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   gender?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   height?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  userId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   weight?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type Resolvers<ContextType = Context> = ResolversObject<{
-  DishData?: DishDataResolvers<ContextType>;
   Foodstuff?: FoodstuffResolvers<ContextType>;
   Menu?: MenuResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Nutrition?: NutritionResolvers<ContextType>;
+  Query?: QueryResolvers<ContextType>;
   Recipe?: RecipeResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 }>;

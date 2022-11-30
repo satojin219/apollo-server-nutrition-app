@@ -35,6 +35,7 @@ model Menu {
   type           String
   createdAt      String
   totalNutrition Nutrition[]
+  mealTime       String
 }
 
 model Foodstuff {

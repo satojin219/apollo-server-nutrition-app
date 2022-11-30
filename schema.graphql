@@ -1,75 +1,39 @@
-# type Query {
-#   getUser: User
-#   getTodos: [Todo]!
-#   getTodoById(id: Int!): Todo
-# }
+type Query {
+  getUser: User
+  getMenusById(userId: Int!, mealTime: String): [Menu]
+  getMenuById(userId: Int!): Menu
+}
 
-# type Mutation {
-#   addTodo(input: AddTodoInput): Todo
-#   updateTodo(id: Int, input: UpdateTodoInput): Todo
-#   deleteTodo(id: Int): Todo
-#   createUser(id: String, input: UserInput): User
-#   updateUser(id: String, input: UserInput): User
-# }
-
-# input AddTodoInput {
-#   title: String!
-#   description: String
-# }
-
-# input UpdateTodoInput {
-#   title: String
-#   description: String
-#   status: TodoStatus
-# }
-
-# input UserInput {
-#   name: String!
-# }
-
-# enum TodoStatus {
-#   done
-#   pending
-# }
-
-# type Todo {
-#   id: Int
-#   createdAt: Date
-#   updatedAt: Date
-#   title: String
-#   description: String
-#   status: TodoStatus!
-#   user: User
-#   userId: String
-# }
-
-# type User {
-#   id: String
-#   name: String
-#   todos: [Todo]
-# }
-
-# scalar Date
-
-# GraphQL schema example
-#
-# https:#gqlgen.com/getting-started/
+type Mutation {
+  createUser(input: NewUser!): User!
+  createMenu(
+    input: CrateMenuInput!
+    foodstuffs: [CreateFoodstuffInput!]!
+    recipes: [CreateRecipeInput!]!
+    totalNutrition: CreateNutritionInput
+  ): Menu!
+  UpdateMenu(
+    input: UpdateMenuInput!
+    foodstuffs: [UpdateFoodstuffInput!]!
+    recipes: [UpdateRecipeInput!]!
+    totalNutrition: UpdateNutritionInput!
+  ): Menu!
+  CreateFoodstuff(input: CreateFoodstuffInput): [Foodstuff!]!
+  UpdateFoodstuff(input: UpdateFoodstuffInput): [Foodstuff!]!
+  CreateRecipe(input: CreateRecipeInput): [Recipe!]!
+  UpdateRecipe(input: UpdateRecipeInput): [Recipe!]!
+  CreateNutrition(input: CreateNutritionInput): Nutrition
+  UpdateNutrition(input: UpdateNutritionInput): Nutrition
+}
 
 type User {
-  userId: ID!
+  id: ID!
   name: String
   age: Int
   gender: String
   weight: Int
   height: Int
   activeLevel: Int
-}
-
-type DishData {
-  breakfast: [Menu]
-  lunch: [Menu]
-  dinner: [Menu]
-  snack: [Menu]
 }
 
 type Menu {
@@ -85,6 +49,7 @@ type Menu {
   time: Int
   type: String
   createdAt: String
+  mealTime: String
 }
 
 type Foodstuff {
@@ -246,31 +211,9 @@ input UpdateNutritionInput {
 }
 input NewUser {
   name: String!
-  age: Int
-  gender: String
-  weight: Int
-  height: Int
-  activeLevel: Int
-}
-
-type Mutation {
-  createUser(input: NewUser!): User!
-  createMenu(
-    input: CrateMenuInput!
-    foodstuffs: [CreateFoodstuffInput!]!
-    recipes: [CreateRecipeInput!]!
-    totalNutrition: CreateNutritionInput
-  ): Menu!
-  UpdateMenu(
-    input: UpdateMenuInput!
-    foodstuffs: [UpdateFoodstuffInput!]!
-    recipes: [UpdateRecipeInput!]!
-    totalNutrition: UpdateNutritionInput!
-  ): Menu!
-  CreateFoodstuff(input: CreateFoodstuffInput): [Foodstuff!]!
-  UpdateFoodstuff(input: UpdateFoodstuffInput): [Foodstuff!]!
-  CreateRecipe(input: CreateRecipeInput): [Recipe!]!
-  UpdateRecipe(input: UpdateRecipeInput): [Recipe!]!
-  CreateNutrition(input: CreateNutritionInput): Nutrition
-  UpdateNutrition(input: UpdateNutritionInput): Nutrition
+  age: Int!
+  gender: String!
+  weight: Int!
+  height: Int!
+  activeLevel: Int!
 }
