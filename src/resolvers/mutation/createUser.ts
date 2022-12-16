@@ -19,6 +19,11 @@ export const createUser: MutationResolvers["createUser"] = async (parent, args, 
     data: {
       id: userId,
       name: args.input.name,
+      age: args.input.age,
+      gender: args.input.gender,
+      weight: args.input.weight,
+      height: args.input.height,
+      activeLevel: args.input.activeLevel
     },
   });
   return createdUser;

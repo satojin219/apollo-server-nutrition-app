@@ -8,7 +8,7 @@ const resolvers: Resolvers = {
   },
   Mutation: {
     createUser: createUser,
-    updateUser: () => null,
+    // updateUser: () => null,
   },
   Date: dateScalar,
 };

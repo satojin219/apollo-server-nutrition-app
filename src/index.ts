@@ -8,11 +8,14 @@ import fetch from "node-fetch";
 import { join } from "path";
 import resolvers from "./resolvers";
 import { Context } from "./types/context";
+import { SERVER_PORT, AUTH0_AUDIENCE, AUTH0_DOMAIN } from "./config/constants";
 
 const schema = loadSchemaSync(join(__dirname, "../schema.graphql"), {
   loaders: [new GraphQLFileLoader()],
 });
+
 const schemaWithResolvers = addResolversToSchema({ schema, resolvers });
+
 const server = new ApolloServer({
   schema: schemaWithResolvers,
   cors: true,
@@ -27,7 +30,7 @@ const server = new ApolloServer({
     try {
       const user = await new Promise<JwtPayload>((resolve, reject) => {
         const client = jwksClient({
-          jwksUri: `${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`,
+          jwksUri: `${AUTH0_DOMAIN}/.well-known/jwks.json`,
         });
         jwt.verify(
           token,
@@ -38,8 +41,8 @@ const server = new ApolloServer({
             });
           },
           {
-            audience: `${process.env.AUTH0_AUDIENCE}`,
-            issuer: `${process.env.AUTH0_DOMAIN}/`,
+            audience: `${AUTH0_AUDIENCE}`,
+            issuer: `${AUTH0_DOMAIN}/`,
             algorithms: ["RS256"],
           },
           (err, decoded) => {
@@ -54,18 +57,23 @@ const server = new ApolloServer({
         );
       });
 
-      const userInfo = await fetch(`${process.env.AUTH0_DOMAIN}/userinfo`, {
+      const userInfo = await fetch(`${AUTH0_DOMAIN}/userinfo`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       }).then((res) => res.json());
-
       return {
         user: {
           id: user.sub,
           name: userInfo.nickname,
           email: userInfo.email,
+          // 認証の段階で身体情報を取得する手段がないので、
+          activeLevel: 1,
+          age: 1,
+          gender: "man",
+          height: 1,
+          weight: 1,
         },
       } as Context;
     } catch (error) {
@@ -76,6 +84,6 @@ const server = new ApolloServer({
   },
 });
 
-server.listen({ port: process.env.APOLLO_SERVER_PORT }).then(({ url }) => {
+server.listen({ port: SERVER_PORT }).then(({ url }) => {
   console.log(`🚀  Server ready at ${url}`);
 });

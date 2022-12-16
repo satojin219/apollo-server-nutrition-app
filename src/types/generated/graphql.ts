@@ -1,4 +1,4 @@
-import { GraphQLResolveInfo } from 'graphql';
+import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import { Context } from '../context';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -13,6 +13,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  Date: any;
 };
 
 export type CrateMenuInput = {
@@ -375,6 +376,7 @@ export type ResolversTypes = ResolversObject<{
   CreateFoodstuffInput: CreateFoodstuffInput;
   CreateNutritionInput: CreateNutritionInput;
   CreateRecipeInput: CreateRecipeInput;
+  Date: ResolverTypeWrapper<Scalars['Date']>;
   Foodstuff: ResolverTypeWrapper<Foodstuff>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
@@ -399,6 +401,7 @@ export type ResolversParentTypes = ResolversObject<{
   CreateFoodstuffInput: CreateFoodstuffInput;
   CreateNutritionInput: CreateNutritionInput;
   CreateRecipeInput: CreateRecipeInput;
+  Date: Scalars['Date'];
   Foodstuff: Foodstuff;
   ID: Scalars['ID'];
   Int: Scalars['Int'];
@@ -415,6 +418,10 @@ export type ResolversParentTypes = ResolversObject<{
   UpdateRecipeInput: UpdateRecipeInput;
   User: User;
 }>;
+
+export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
+  name: 'Date';
+}
 
 export type FoodstuffResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Foodstuff'] = ResolversParentTypes['Foodstuff']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
@@ -514,6 +521,7 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
 }>;
 
 export type Resolvers<ContextType = Context> = ResolversObject<{
+  Date?: GraphQLScalarType;
   Foodstuff?: FoodstuffResolvers<ContextType>;
   Menu?: MenuResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
