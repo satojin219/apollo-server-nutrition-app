@@ -5,7 +5,7 @@ export type Context = {
     id: string;
     weight: number;
     height: number;
-    gender: number;
+    gender: string;
     age: number;
     activeLevel: number;
   };

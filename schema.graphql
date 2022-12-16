@@ -217,3 +217,5 @@ input NewUser {
   height: Int!
   activeLevel: Int!
 }
+
+scalar Date
